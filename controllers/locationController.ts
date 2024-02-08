@@ -13,7 +13,14 @@ export class LocationController {
     private readonly API_URL: string = 'https://rickandmortyapi.com/api/location';
 /**
  * @swagger
- * /Location/()
+ * /Location/:
+ * get:
+ *      summary: obtient la list des lieux
+ *      description: recupere la liste des lieux vue dans la serie 
+ *      tags:[Location]
+ *      parameters
+ *        - in: path
+ *          name:  
  */
     public async getLocations(req: Request, res: Response): Promise<void> {
         try {
