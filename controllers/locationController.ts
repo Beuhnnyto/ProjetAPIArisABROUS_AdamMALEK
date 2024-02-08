@@ -11,7 +11,10 @@ import { MinimalLocationData } from '../interfaces/minimalLocation';
 
 export class LocationController {
     private readonly API_URL: string = 'https://rickandmortyapi.com/api/location';
-
+/**
+ * @swagger
+ * /Location/()
+ */
     public async getLocations(req: Request, res: Response): Promise<void> {
         try {
             const response: AxiosResponse = await axios.get(this.API_URL);
