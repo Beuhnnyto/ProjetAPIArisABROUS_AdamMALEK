@@ -32,6 +32,11 @@ app.get('/characters', async (req: Request, res: Response) => {
 }
 );
 
+app.get('/characters/:id', async (req: Request, res: Response) => {
+    await characterController.getCharacterByID(req, res);
+    
+}
+);
 app.get('/locations', async (req: Request, res: Response) => {
     await locationController.getLocations(req, res);
     

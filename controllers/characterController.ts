@@ -26,4 +26,25 @@ export class CharacterController {
         }
 
     }
+
+    public async getCharacterByID(req: Request, res: Response): Promise<void> {
+        try {
+            const response: AxiosResponse = await axios.get(`${this.API_URL}/${req.params.id}`);
+            
+            const character: MinimalCharacterData = {
+                id: response.data.id,
+                name: response.data.name,
+                species: response.data.species,
+                gender: response.data.gender,
+                image: response.data.image
+            }
+            res.json(character);
+
+        } catch (error) {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+
+    }
 }
+
