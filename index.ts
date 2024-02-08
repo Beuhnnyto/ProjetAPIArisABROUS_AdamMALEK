@@ -1,13 +1,25 @@
-import express, { Express, Request, Response , Application } from 'express';
+import express, { Express, Request, Response , Application, NextFunction } from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { CharacterController } from './controllers/characterController';
-import { NextFunction } from 'connect';
+// import cors from 'cors';
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUI from 'swagger-ui-express';
+import { swaggerOptions } from "./swaggerOptions";
+import { errorHandler } from './midlewares/errorHandler';
+
+
+
+
+//For cors
+const app: Application = express();
+// app.use(cors());
+
+
+
 
 //For env File 
 dotenv.config();
-
-const app: Application = express();
 const port = process.env.PORT;
 
 
@@ -37,6 +49,11 @@ app.get('/episodes', async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+const specs = swaggerJSDoc(swaggerOptions);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
+app.use(errorHandler);
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
