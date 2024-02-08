@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { MinimalEpisodeData } from '../interfaces/minimalEpisodeData';
 
 
 export class EpisodeController {
     private readonly API_URL: string = 'https://rickandmortyapi.com/api/episode';
 
-    public async getEpisodes(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async getEpisodes(req: Request, res: Response): Promise<void> {
         try {
             const response: AxiosResponse = await axios.get(this.API_URL);
             
