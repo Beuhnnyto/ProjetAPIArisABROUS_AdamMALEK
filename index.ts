@@ -2,7 +2,19 @@ import express, { Express, Request, Response , Application, NextFunction } from 
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { CharacterController } from './controllers/characterController';
-import { NextFunction } from 'connect';
+import { EpisodeController } from './controllers/episodeController';
+import { LocationController } from './controllers/locationController';
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUI from 'swagger-ui-express';
+import { swaggerOptions } from "./swaggerOptions";
+import { errorHandler } from './midlewares/errorHandler';
+
+const app: Application = express();
+
+//For Swagger
+const specs = swaggerJSDoc(swaggerOptions);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
+app.use(errorHandler);
 
 //For env File 
 dotenv.config();
@@ -14,26 +26,23 @@ const episodeController = new EpisodeController();
 const locationController = new LocationController();
 
 
-app.get('/characters', async (req: Request, res: Response, next: NextFunction) => {
-    await characterController.getCharacters(req, res, next);
+app.get('/characters', async (req: Request, res: Response) => {
+    await characterController.getCharacters(req, res);
     
 }
 );
 
-app.get('/locations', async (req: Request, res: Response, next: NextFunction) => {
-    await locationController.getLocations(req, res, next);
+app.get('/locations', async (req: Request, res: Response) => {
+    await locationController.getLocations(req, res);
     
 }
 );
 
 app.get('/episodes', async (req: Request, res: Response) => {
-    try {
-        const response = await axios.get('https://rickandmortyapi.com/api/episode');
-        res.json(response.data);
-    } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+    await episodeController.getEpisodes(req, res);
+    
+}
+);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
