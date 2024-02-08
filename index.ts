@@ -43,8 +43,20 @@ app.get('/locations', async (req: Request, res: Response) => {
 }
 );
 
+app.get('/locations/:id', async (req: Request, res: Response) => {
+    await locationController.getLocationByID(req, res);
+    
+}
+);
+
 app.get('/episodes', async (req: Request, res: Response) => {
     await episodeController.getEpisodes(req, res);
+    
+}
+);
+
+app.get('/episodes/:id', async (req: Request, res: Response) => {
+    await episodeController.getEpisodeByID(req, res);
     
 }
 );

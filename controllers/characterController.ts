@@ -2,8 +2,17 @@ import axios, { AxiosResponse } from 'axios';
 import { Request, Response} from 'express';
 import { MinimalCharacterData } from '../interfaces/minimalCharacterData';
 
+
+/**
+ * @swagger
+ * tags:
+  - name: Personnages
+    description: Personnages de la serie
+ */
 export class CharacterController {
     private readonly API_URL: string = 'https://rickandmortyapi.com/api/character';
+
+
 
     public async getCharacters(req: Request, res: Response): Promise<void> {
         try {
@@ -27,6 +36,14 @@ export class CharacterController {
 
     }
 
+    /**
+     * @swagger
+     * /Character/{id}:
+     * get:
+     *     summary: obtient un personnage par son id
+     *    description: recupere un personnage par son id
+     *   tags:[Character]
+     */
     public async getCharacterByID(req: Request, res: Response): Promise<void> {
         try {
             const response: AxiosResponse = await axios.get(`${this.API_URL}/${req.params.id}`);
